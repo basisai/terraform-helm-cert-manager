@@ -142,11 +142,11 @@ variable "resources" {
   default = {
     requests = {
       cpu    = "100m"
-      memory = "100Mi"
+      memory = "300Mi"
     }
     limits = {
       cpu    = "100m"
-      memory = "100Mi"
+      memory = "300Mi"
     }
   }
 }
@@ -221,7 +221,13 @@ variable "webhook_timeout_seconds" {
 
 variable "webook_strategy" {
   description = "Update strategy for admission webhook"
-  default     = {}
+  default = {
+    type = "RollingUpdate"
+    rollingUpdate = {
+      maxSurge       = 1
+      maxUnavailable = "50%"
+    }
+  }
 }
 
 variable "webhook_security_context" {
@@ -269,11 +275,11 @@ variable "webhook_resources" {
   default = {
     requests = {
       cpu    = "100m"
-      memory = "100Mi"
+      memory = "300Mi"
     }
     limits = {
       cpu    = "100m"
-      memory = "100Mi"
+      memory = "300Mi"
     }
   }
 }
@@ -361,7 +367,13 @@ variable "ca_injector_replica_count" {
 
 variable "ca_injector_strategy" {
   description = "CA Injector deployment update strategy"
-  default     = {}
+  default = {
+    type = "RollingUpdate"
+    rollingUpdate = {
+      maxSurge       = 1
+      maxUnavailable = "50%"
+    }
+  }
 }
 
 variable "ca_injector_security_context" {
@@ -399,11 +411,11 @@ variable "ca_injector_resources" {
   default = {
     requests = {
       cpu    = "100m"
-      memory = "100Mi"
+      memory = "300Mi"
     }
     limits = {
       cpu    = "100m"
-      memory = "100Mi"
+      memory = "300Mi"
     }
   }
 }
