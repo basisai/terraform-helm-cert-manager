@@ -101,8 +101,8 @@ variable "strategy" {
   default = {
     type = "RollingUpdate"
     rollingUpdate = {
-      maxSurge     = 1
-      minAvailable = 1
+      maxSurge       = 1
+      maxUnavailable = "50%"
     }
   }
 }
