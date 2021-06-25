@@ -24,6 +24,7 @@ No requirements.
 | ca\_injector\_extra\_args | Extra args for ca\_injector | `list` | `[]` | no |
 | ca\_injector\_image\_repository | Image repository for ca\_injector | `string` | `"quay.io/jetstack/cert-manager-cainjector"` | no |
 | ca\_injector\_image\_tag | Override the image tag to deploy by setting this variable. If no value is set, the chart's appVersion will be used. | `any` | `null` | no |
+| ca\_injector\_node\_selector | Node selector for ca\_injector pods | `map` | `{}` | no |
 | ca\_injector\_pod\_annotations | Extra annotations for ca\_injector pods | `map` | `{}` | no |
 | ca\_injector\_pod\_labels | Extra labels for ca\_injector pods | `map` | `{}` | no |
 | ca\_injector\_replica\_count | Number of replica for injector | `number` | `1` | no |
@@ -54,6 +55,7 @@ No requirements.
 | log\_level | Set the verbosity of cert-manager. Range of 0 - 6 with 6 being the most verbose. | `number` | `2` | no |
 | max\_history | Max History for Helm | `number` | `20` | no |
 | mutating\_webhook\_configuration\_annotations | Optional additional annotations to add to the webhook MutatingWebhookConfiguration | `map` | `{}` | no |
+| node\_selector | Node selector for cert-manager-controller pods | `map` | `{}` | no |
 | pod\_annotations | Extra annotations for pods | `map` | `{}` | no |
 | pod\_labels | Extra labels for pods | `map` | `{}` | no |
 | priority\_class\_name | Priority class for all cert-manager pods | `string` | `""` | no |
@@ -80,6 +82,7 @@ No requirements.
 | webhook\_image\_repository | Image repository for webhook | `string` | `"quay.io/jetstack/cert-manager-webhook"` | no |
 | webhook\_image\_tag | Override the image tag to deploy by setting this variable. If no value is set, the chart's appVersion will be used. | `any` | `null` | no |
 | webhook\_liveness\_probe | Liveness probe for webhook | `map` | <pre>{<br>  "failureThreshold": 3,<br>  "initialDelaySeconds": 60,<br>  "periodSeconds": 10,<br>  "successThreshold": 1,<br>  "timeoutSeconds": 1<br>}</pre> | no |
+| webhook\_node\_selector | Node selector for webhook | `map` | `{}` | no |
 | webhook\_pod\_annotations | Extra annotations for webhook pods | `map` | `{}` | no |
 | webhook\_pod\_labels | Extra labels for webhook pods | `map` | `{}` | no |
 | webhook\_port | Port used by webhook to listen for request from Kubernetes Master | `number` | `10250` | no |

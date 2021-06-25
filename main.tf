@@ -53,8 +53,9 @@ locals {
     pod_annotations        = jsonencode(var.pod_annotations)
     pod_labels             = jsonencode(var.pod_labels)
 
-    affinity    = jsonencode(var.affinity)
-    tolerations = jsonencode(var.tolerations)
+    node_selector = jsonencode(var.node_selector)
+    affinity      = jsonencode(var.affinity)
+    tolerations   = jsonencode(var.tolerations)
 
     ingress_shim       = jsonencode(var.ingress_shim)
     prometheus_enabled = var.prometheus_enabled
@@ -82,8 +83,9 @@ locals {
     webhook_liveness_probe  = jsonencode(var.webhook_liveness_probe)
     webhook_readiness_probe = jsonencode(var.webhook_readiness_probe)
 
-    webhook_affinity    = jsonencode(var.webhook_affinity)
-    webhook_tolerations = jsonencode(var.webhook_tolerations)
+    webhook_node_selector = jsonencode(var.webhook_node_selector)
+    webhook_affinity      = jsonencode(var.webhook_affinity)
+    webhook_tolerations   = jsonencode(var.webhook_tolerations)
 
     webhook_image_repository = var.webhook_image_repository
     webhook_image_tag        = var.webhook_image_tag != null ? var.webhook_image_tag : "null"
@@ -113,8 +115,9 @@ locals {
     ca_injector_extra_args = jsonencode(var.ca_injector_extra_args)
     ca_injector_resources  = jsonencode(var.ca_injector_resources)
 
-    ca_injector_affinity    = jsonencode(var.ca_injector_affinity)
-    ca_injector_tolerations = jsonencode(var.ca_injector_tolerations)
+    ca_injector_node_selector = jsonencode(var.ca_injector_node_selector)
+    ca_injector_affinity      = jsonencode(var.ca_injector_affinity)
+    ca_injector_tolerations   = jsonencode(var.ca_injector_tolerations)
 
     ca_injector_image_repository = var.ca_injector_image_repository
     ca_injector_image_tag        = var.ca_injector_image_tag != null ? var.ca_injector_image_tag : "null"

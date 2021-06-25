@@ -65,6 +65,8 @@ serviceAccount:
   name: "${service_account_name}"
   # Optional additional annotations to add to the controller's ServiceAccount
   annotations: ${service_account_annotations}
+  # Automount API credentials for a Service Account.
+  automountServiceAccountToken: true
 
 # Optional additional arguments
 extraArgs: ${extra_args}
@@ -107,7 +109,6 @@ containerSecurityContext: ${container_security_context}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
 
-
 volumes: ${volumes}
 
 volumeMounts: ${volume_mounts}
@@ -120,6 +121,9 @@ podAnnotations: ${pod_annotations}
 
 podLabels: ${pod_labels}
 
+# Optional additional labels to add to the controller Service
+# serviceLabels: {}
+
 # Optional DNS settings, useful if you have a public and private DNS zone for
 # the same domain on Route 53. What follows is an example of ensuring
 # cert-manager can access an ingress or DNS TXT records at all times.
@@ -131,7 +135,7 @@ podLabels: ${pod_labels}
 #     - "1.1.1.1"
 #     - "8.8.8.8"
 
-nodeSelector: {}
+nodeSelector: ${node_selector}
 
 ingressShim: ${ingress_shim}
   # defaultIssuerName: ""
@@ -233,7 +237,7 @@ webhook:
     # successThreshold: 1
     # timeoutSeconds: 1
 
-  nodeSelector: {}
+  nodeSelector: ${webhook_node_selector}
 
   affinity: ${webhook_affinity}
 
@@ -284,6 +288,17 @@ webhook:
   # running in hostNetwork mode.
   hostNetwork: ${webhook_host_network}
 
+  # Specifies how the service should be handled. Useful if you want to expose the
+  # webhook to outside of the cluster. In some cases, the control plane cannot
+  # reach internal services.
+  # serviceType: ClusterIP
+  # loadBalancerIP:
+
+  # Overrides the mutating webhook and validating webhook so they reach the webhook
+  # service using the `url` field instead of a service.
+  # url: {}
+    # host:
+
 cainjector:
   enabled: ${ca_injector_enabled}
   replicaCount: ${ca_injector_replica_count}
@@ -305,7 +320,6 @@ cainjector:
     # readOnlyRootFilesystem: true
     # runAsNonRoot: true
 
-
   # Optional additional annotations to add to the cainjector Deployment
   deploymentAnnotations: ${ca_injector_deployment_annotations}
 
@@ -320,7 +334,7 @@ cainjector:
     #   cpu: 10m
     #   memory: 32Mi
 
-  nodeSelector: {}
+  nodeSelector: ${ca_injector_node_selector}
 
   affinity: ${ca_injector_affinity}
 

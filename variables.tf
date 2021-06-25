@@ -15,7 +15,7 @@ variable "chart_repository" {
 
 variable "chart_version" {
   description = "Version of Chart to install. Set to empty to install the latest version"
-  default     = "1.1.0"
+  default     = "1.4.0"
 }
 
 variable "chart_namespace" {
@@ -196,6 +196,11 @@ variable "prometheus_enabled" {
   default     = true
 }
 
+variable "node_selector" {
+  description = "Node selector for cert-manager-controller pods"
+  default     = {}
+}
+
 variable "affinity" {
   description = "Pod affinity"
   default     = {}
@@ -291,7 +296,7 @@ variable "webhook_liveness_probe" {
     initialDelaySeconds = 60
     periodSeconds       = 10
     successThreshold    = 1
-    timeoutSeconds      = 1
+    timeoutSeconds      = 5
   }
 }
 
@@ -302,9 +307,15 @@ variable "webhook_readiness_probe" {
     initialDelaySeconds = 5
     periodSeconds       = 5
     successThreshold    = 1
-    timeoutSeconds      = 1
+    timeoutSeconds      = 5
   }
 }
+
+variable "webhook_node_selector" {
+  description = "Node selector for webhook"
+  default     = {}
+}
+
 
 variable "webhook_affinity" {
   description = "Affinity for webhook"
@@ -418,6 +429,11 @@ variable "ca_injector_resources" {
       memory = "300Mi"
     }
   }
+}
+
+variable "ca_injector_node_selector" {
+  description = "Node selector for ca_injector"
+  default     = {}
 }
 
 variable "ca_injector_affinity" {
