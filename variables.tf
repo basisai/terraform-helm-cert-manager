@@ -71,6 +71,11 @@ variable "service_account_annotations" {
   default     = {}
 }
 
+variable "service_account_automount_token" {
+  description = "Automount API credentials for a Service Account"
+  default     = true
+}
+
 variable "log_level" {
   description = "Set the verbosity of cert-manager. Range of 0 - 6 with 6 being the most verbose."
   default     = 2

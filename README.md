@@ -68,6 +68,7 @@ No requirements.
 | resources | Resources for pods | `map` | <pre>{<br>  "limits": {<br>    "cpu": "100m",<br>    "memory": "100Mi"<br>  },<br>  "requests": {<br>    "cpu": "100m",<br>    "memory": "100Mi"<br>  }<br>}</pre> | no |
 | security\_context | Configure pod security context | `map` | `{}` | no |
 | service\_account\_annotations | Service acocunt annotations | `map` | `{}` | no |
+| service\_account\_automount\_token | Automount API credentials for a Service Account | `bool` | `true` | no |
 | service\_account\_create | Create service account | `bool` | `true` | no |
 | service\_account\_name | Override the default service account name | `string` | `""` | no |
 | strategy | Update strategy of deployment | `map` | <pre>{<br>  "rollingUpdate": {<br>    "maxSurge": 1,<br>    "minAvailable": 1<br>  },<br>  "type": "RollingUpdate"<br>}</pre> | no |

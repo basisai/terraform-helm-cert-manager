@@ -66,7 +66,7 @@ serviceAccount:
   # Optional additional annotations to add to the controller's ServiceAccount
   annotations: ${service_account_annotations}
   # Automount API credentials for a Service Account.
-  automountServiceAccountToken: true
+  automountServiceAccountToken: ${service_account_automount_token}
 
 # Optional additional arguments
 extraArgs: ${extra_args}

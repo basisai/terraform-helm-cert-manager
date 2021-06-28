@@ -25,9 +25,10 @@ locals {
     psp_enable   = var.psp_enable
     psp_apparmor = var.psp_apparmor
 
-    service_account_create      = var.service_account_create
-    service_account_name        = var.service_account_name
-    service_account_annotations = jsonencode(var.service_account_annotations)
+    service_account_create          = var.service_account_create
+    service_account_name            = var.service_account_name
+    service_account_annotations     = jsonencode(var.service_account_annotations)
+    service_account_automount_token = var.service_account_automount_token
 
     install_crds = var.install_crds
 
