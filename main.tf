@@ -18,8 +18,12 @@ locals {
     priority_class_name = var.priority_class_name
 
     log_level                  = var.log_level
-    leader_election_namespace  = var.leader_election_namespace
     cluster_resource_namespace = var.cluster_resource_namespace
+
+    leader_election_namespace      = var.leader_election_namespace
+    leader_election_lease_duration = var.leader_election_lease_duration
+    leader_election_renew_deadline = var.leader_election_renew_deadline
+    leader_election_retry_period   = var.leader_election_retry_period
 
     rbac_create  = var.rbac_create
     psp_enable   = var.psp_enable

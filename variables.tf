@@ -86,6 +86,21 @@ variable "leader_election_namespace" {
   default     = "kube-system"
 }
 
+variable "leader_election_lease_duration" {
+  description = "Duration that non-leader candidates will wait after observing a leadership renewal"
+  default     = "60s"
+}
+
+variable "leader_election_renew_deadline" {
+  description = "Interval between attempts by the acting master to renew a leadership slot before it stops leading"
+  default     = "40s"
+}
+
+variable "leader_election_retry_period" {
+  description = "Duration the clients should wait between attempting acquisition and renewal of a leadership."
+  default     = "15s"
+}
+
 variable "cluster_resource_namespace" {
   description = "Override the namespace used to store DNS provider credentials etc. for ClusterIssuer resources. By default, the same namespace as cert-manager is deployed within is used. This namespace will not be automatically created by the Helm chart."
   default     = ""
@@ -476,10 +491,9 @@ variable "ca_injector_service_account_annotations" {
   default     = {}
 }
 
-
-
-
-
+###############################################
+# startupapicheck is a Helm post-install hook
+###############################################
 
 variable "startupapicheck_enabled" {
   description = "Enable startupapicheck"
