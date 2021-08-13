@@ -385,18 +385,17 @@ cainjector:
 # This startupapicheck is a Helm post-install hook that waits for the webhook
 # endpoints to become available.
 startupapicheck:
-  enabled: true
+  enabled: ${startupapicheck_enabled}
 
   # Pod Security Context to be set on the startupapicheck component Pod
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-  securityContext:
-    runAsNonRoot: true
+  securityContext: ${startupapicheck_security_context}
 
   # Timeout for 'kubectl check api' command
-  timeout: 1m
+  timeout: ${startupapicheck_timeout}
 
   # Job backoffLimit
-  backoffLimit: 4
+  backoffLimit: ${startupapicheck_backoff_limit}
 
   # Optional additional annotations to add to the startupapicheck Job
   jobAnnotations:
@@ -408,34 +407,25 @@ startupapicheck:
   # podAnnotations: {}
 
   # Optional additional arguments for startupapicheck
-  extraArgs: []
+  extraArgs: ${startupapicheck_extra_args}
 
-  resources: {}
-    # requests:
-    #   cpu: 10m
-    #   memory: 32Mi
+  resources: ${startupapicheck_resources}
 
-  nodeSelector: {}
+  nodeSelector: ${startupapicheck_node_selector}
 
-  affinity: {}
+  affinity: ${startupapicheck_affinity}
 
-  tolerations: []
+  tolerations: ${startupapicheck_tolerations}
 
   # Optional additional labels to add to the startupapicheck Pods
-  podLabels: {}
+  podLabels: ${startupapicheck_pod_labels}
 
   image:
-    repository: quay.io/jetstack/cert-manager-ctl
-    # You can manage a registry with
-    # registry: quay.io
-    # repository: jetstack/cert-manager-ctl
+    repository: ${startupapicheck_image}
 
     # Override the image tag to deploy by setting this variable.
     # If no value is set, the chart's appVersion will be used.
-    # tag: canary
-
-    # Setting a digest will override any tag
-    # digest: sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
+    tag: ${startupapicheck_image_tag}
 
     pullPolicy: IfNotPresent
 

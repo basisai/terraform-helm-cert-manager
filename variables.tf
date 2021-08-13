@@ -475,3 +475,79 @@ variable "ca_injector_service_account_annotations" {
   description = "Annotations for ca_injector service account"
   default     = {}
 }
+
+
+
+
+
+
+variable "startupapicheck_enabled" {
+  description = "Enable startupapicheck"
+  default     = true
+}
+
+variable "startupapicheck_security_context" {
+  description = "startupapicheck security context"
+  default = {
+    runAsNonRoot = true
+  }
+}
+
+variable "startupapicheck_timeout" {
+  description = "startupapicheck timeout"
+  default     = "1m"
+}
+
+variable "startupapicheck_backoff_limit" {
+  description = "startupapicheck backoff limit"
+  default     = 4
+}
+
+variable "startupapicheck_pod_labels" {
+  description = "Extra labels for startupapicheck pods"
+  default     = {}
+}
+
+variable "startupapicheck_extra_args" {
+  description = "Extra args for startupapicheck"
+  default     = []
+}
+
+variable "startupapicheck_resources" {
+  description = "startupapicheck pod resources"
+  default = {
+    requests = {
+      cpu    = "10m"
+      memory = "32Mi"
+    }
+    limits = {
+      cpu    = "10m"
+      memory = "32Mi"
+    }
+  }
+}
+
+variable "startupapicheck_node_selector" {
+  description = "Node selector for startupapicheck"
+  default     = {}
+}
+
+variable "startupapicheck_affinity" {
+  description = "Affinity for startupapicheck"
+  default     = {}
+}
+
+variable "startupapicheck_tolerations" {
+  description = "Tolerations for startupapicheck"
+  default     = []
+}
+
+variable "startupapicheck_image_repository" {
+  description = "Image repository for startupapicheck"
+  default     = "quay.io/jetstack/cert-manager-ctl"
+}
+
+variable "startupapicheck_image_tag" {
+  description = "Override the image tag to deploy by setting this variable. If no value is set, the chart's appVersion will be used."
+  default     = null
+}
