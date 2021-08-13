@@ -24,6 +24,21 @@ global:
     # Override the namespace used to store the ConfigMap for leader election
     namespace: ${leader_election_namespace}
 
+    # The duration that non-leader candidates will wait after observing a
+    # leadership renewal until attempting to acquire leadership of a led but
+    # unrenewed leader slot. This is effectively the maximum duration that a
+    # leader can be stopped before it is replaced by another candidate.
+    # leaseDuration: 60s
+
+    # The interval between attempts by the acting master to renew a leadership
+    # slot before it stops leading. This must be less than or equal to the
+    # lease duration.
+    # renewDeadline: 40s
+
+    # The duration the clients should wait between attempting acquisition and
+    # renewal of a leadership.
+    # retryPeriod: 15s
+
 installCRDs: ${install_crds}
 
 replicaCount: ${replica_count}
@@ -366,3 +381,83 @@ cainjector:
     name: "${ca_injector_service_account_name}"
     # Optional additional annotations to add to the controller's ServiceAccount
     annotations: ${ca_injector_service_account_annotations}
+
+# This startupapicheck is a Helm post-install hook that waits for the webhook
+# endpoints to become available.
+startupapicheck:
+  enabled: true
+
+  # Pod Security Context to be set on the startupapicheck component Pod
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  securityContext:
+    runAsNonRoot: true
+
+  # Timeout for 'kubectl check api' command
+  timeout: 1m
+
+  # Job backoffLimit
+  backoffLimit: 4
+
+  # Optional additional annotations to add to the startupapicheck Job
+  jobAnnotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "1"
+    helm.sh/hook-delete-policy: hook-succeeded
+
+  # Optional additional annotations to add to the startupapicheck Pods
+  # podAnnotations: {}
+
+  # Optional additional arguments for startupapicheck
+  extraArgs: []
+
+  resources: {}
+    # requests:
+    #   cpu: 10m
+    #   memory: 32Mi
+
+  nodeSelector: {}
+
+  affinity: {}
+
+  tolerations: []
+
+  # Optional additional labels to add to the startupapicheck Pods
+  podLabels: {}
+
+  image:
+    repository: quay.io/jetstack/cert-manager-ctl
+    # You can manage a registry with
+    # registry: quay.io
+    # repository: jetstack/cert-manager-ctl
+
+    # Override the image tag to deploy by setting this variable.
+    # If no value is set, the chart's appVersion will be used.
+    # tag: canary
+
+    # Setting a digest will override any tag
+    # digest: sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
+
+    pullPolicy: IfNotPresent
+
+  rbac:
+    annotations:
+      helm.sh/hook: post-install
+      helm.sh/hook-weight: "-5"
+      helm.sh/hook-delete-policy: hook-succeeded
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    # name: ""
+
+    # Optional additional annotations to add to the Job's ServiceAccount
+    annotations:
+      helm.sh/hook: post-install
+      helm.sh/hook-weight: "-5"
+      helm.sh/hook-delete-policy: hook-succeeded
+
+    # Automount API credentials for a Service Account.
+    automountServiceAccountToken: true
