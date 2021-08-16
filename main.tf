@@ -18,8 +18,12 @@ locals {
     priority_class_name = var.priority_class_name
 
     log_level                  = var.log_level
-    leader_election_namespace  = var.leader_election_namespace
     cluster_resource_namespace = var.cluster_resource_namespace
+
+    leader_election_namespace      = var.leader_election_namespace
+    leader_election_lease_duration = var.leader_election_lease_duration
+    leader_election_renew_deadline = var.leader_election_renew_deadline
+    leader_election_retry_period   = var.leader_election_retry_period
 
     rbac_create  = var.rbac_create
     psp_enable   = var.psp_enable
@@ -126,5 +130,24 @@ locals {
     ca_injector_service_account_create      = var.ca_injector_service_account_create
     ca_injector_service_account_name        = var.ca_injector_service_account_name
     ca_injector_service_account_annotations = jsonencode(var.ca_injector_service_account_annotations)
+
+    startupapicheck_enabled = var.startupapicheck_enabled
+
+    startupapicheck_security_context = jsonencode(var.startupapicheck_security_context)
+
+    startupapicheck_timeout       = var.startupapicheck_timeout
+    startupapicheck_backoff_limit = var.startupapicheck_backoff_limit
+
+    startupapicheck_extra_args = jsonencode(var.startupapicheck_extra_args)
+    startupapicheck_resources  = jsonencode(var.startupapicheck_resources)
+
+    startupapicheck_node_selector = jsonencode(var.startupapicheck_node_selector)
+    startupapicheck_affinity      = jsonencode(var.startupapicheck_affinity)
+    startupapicheck_tolerations   = jsonencode(var.startupapicheck_tolerations)
+
+    startupapicheck_pod_labels = jsonencode(var.startupapicheck_pod_labels)
+
+    startupapicheck_image     = var.startupapicheck_image_repository
+    startupapicheck_image_tag = var.startupapicheck_image_tag != null ? var.startupapicheck_image_tag : "null"
   }
 }

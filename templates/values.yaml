@@ -24,6 +24,21 @@ global:
     # Override the namespace used to store the ConfigMap for leader election
     namespace: ${leader_election_namespace}
 
+    # The duration that non-leader candidates will wait after observing a
+    # leadership renewal until attempting to acquire leadership of a led but
+    # unrenewed leader slot. This is effectively the maximum duration that a
+    # leader can be stopped before it is replaced by another candidate.
+    leaseDuration: ${leader_election_lease_duration}
+
+    # The interval between attempts by the acting master to renew a leadership
+    # slot before it stops leading. This must be less than or equal to the
+    # lease duration.
+    renewDeadline: ${leader_election_renew_deadline}
+
+    # The duration the clients should wait between attempting acquisition and
+    # renewal of a leadership.
+    retryPeriod: ${leader_election_retry_period}
+
 installCRDs: ${install_crds}
 
 replicaCount: ${replica_count}
@@ -366,3 +381,73 @@ cainjector:
     name: "${ca_injector_service_account_name}"
     # Optional additional annotations to add to the controller's ServiceAccount
     annotations: ${ca_injector_service_account_annotations}
+
+# This startupapicheck is a Helm post-install hook that waits for the webhook
+# endpoints to become available.
+startupapicheck:
+  enabled: ${startupapicheck_enabled}
+
+  # Pod Security Context to be set on the startupapicheck component Pod
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  securityContext: ${startupapicheck_security_context}
+
+  # Timeout for 'kubectl check api' command
+  timeout: ${startupapicheck_timeout}
+
+  # Job backoffLimit
+  backoffLimit: ${startupapicheck_backoff_limit}
+
+  # Optional additional annotations to add to the startupapicheck Job
+  jobAnnotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "1"
+    helm.sh/hook-delete-policy: hook-succeeded
+
+  # Optional additional annotations to add to the startupapicheck Pods
+  # podAnnotations: {}
+
+  # Optional additional arguments for startupapicheck
+  extraArgs: ${startupapicheck_extra_args}
+
+  resources: ${startupapicheck_resources}
+
+  nodeSelector: ${startupapicheck_node_selector}
+
+  affinity: ${startupapicheck_affinity}
+
+  tolerations: ${startupapicheck_tolerations}
+
+  # Optional additional labels to add to the startupapicheck Pods
+  podLabels: ${startupapicheck_pod_labels}
+
+  image:
+    repository: ${startupapicheck_image}
+
+    # Override the image tag to deploy by setting this variable.
+    # If no value is set, the chart's appVersion will be used.
+    tag: ${startupapicheck_image_tag}
+
+    pullPolicy: IfNotPresent
+
+  rbac:
+    annotations:
+      helm.sh/hook: post-install
+      helm.sh/hook-weight: "-5"
+      helm.sh/hook-delete-policy: hook-succeeded
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    # name: ""
+
+    # Optional additional annotations to add to the Job's ServiceAccount
+    annotations:
+      helm.sh/hook: post-install
+      helm.sh/hook-weight: "-5"
+      helm.sh/hook-delete-policy: hook-succeeded
+
+    # Automount API credentials for a Service Account.
+    automountServiceAccountToken: true
