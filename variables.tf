@@ -33,6 +33,12 @@ variable "max_history" {
   default     = 20
 }
 
+variable "create_namespace" {
+  type        = bool
+  description = "Create the namespace if it does not yet exist."
+  default     = false
+}
+
 #######################
 # Chart Values
 #######################
