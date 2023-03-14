@@ -8,6 +8,8 @@ resource "helm_release" "release" {
   max_history = var.max_history
   timeout     = var.chart_timeout
 
+  create_namespace = var.create_namespace
+
   values = [
     templatefile("${path.module}/templates/values.yaml", local.values),
   ]
